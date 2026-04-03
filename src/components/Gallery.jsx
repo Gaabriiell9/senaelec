@@ -53,13 +53,11 @@ function CarouselRow({ items, direction = 'left', onClickPhoto }) {
             }}
             onMouseEnter={e => {
               e.currentTarget.querySelector('img').style.transform = 'scale(1.08)';
-              e.currentTarget.querySelector('.cap').style.opacity = '1';
               e.currentTarget.style.borderColor = 'rgba(245,158,11,0.5)';
               e.currentTarget.style.boxShadow = '0 8px 32px rgba(245,158,11,0.2)';
             }}
             onMouseLeave={e => {
               e.currentTarget.querySelector('img').style.transform = 'scale(1)';
-              e.currentTarget.querySelector('.cap').style.opacity = '0';
               e.currentTarget.style.borderColor = 'rgba(245,158,11,0.15)';
               e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.35)';
             }}
@@ -76,16 +74,19 @@ function CarouselRow({ items, direction = 'left', onClickPhoto }) {
             />
             <div className="cap" style={{
               position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(13,31,45,0.92) 0%, rgba(13,31,45,0.2) 60%, transparent 100%)',
+              background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 45%)',
               display: 'flex', alignItems: 'flex-end',
-              padding: '1rem',
-              opacity: 0,
-              transition: 'opacity 0.3s',
+              padding: '0.6rem 0.75rem',
+              opacity: 1,
             }}>
               <p style={{
-                color: '#fff', fontSize: '0.85rem', fontWeight: 600,
+                color: 'rgba(255,255,255,0.90)',
+                fontSize: '0.72rem',
+                fontWeight: 500,
                 fontFamily: 'var(--font-body)',
-                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                letterSpacing: '0.02em',
+                textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+                lineHeight: 1.3,
               }}>
                 {photo.caption}
               </p>
