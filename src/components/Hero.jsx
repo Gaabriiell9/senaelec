@@ -71,7 +71,7 @@ export default function Hero() {
             lineHeight: 1.7,
             animation: 'fadeUp 0.8s ease 0.25s both',
           }}>
-            Installation, dépannage et mise aux normes — interventions rapides,
+            Installation, dépannage et mise aux normes, interventions rapides,
             travail soigné, résultats garantis.
           </p>
 
@@ -91,8 +91,8 @@ export default function Hero() {
               textDecoration: 'none', display: 'inline-block',
               transition: 'transform 0.2s, box-shadow 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(245,158,11,0.35)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}>
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(245,158,11,0.35)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}>
               Demander un devis
             </a>
             <a href="tel:0636207452" style={{
@@ -104,8 +104,8 @@ export default function Hero() {
               background: 'rgba(255,255,255,0.08)',
               transition: 'border-color 0.2s, background 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--amber)'; e.currentTarget.style.background = 'rgba(245,158,11,0.08)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}>
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--amber)'; e.currentTarget.style.background = 'rgba(245,158,11,0.08)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}>
               <Phone size={16} /> 06 36 20 74 52
             </a>
           </div>
