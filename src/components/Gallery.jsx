@@ -145,31 +145,15 @@ export default function Gallery() {
       {/* Rangée 1 — gauche */}
       <div style={{ position: 'relative', marginBottom: '1rem' }}>
         <CarouselRow items={row1} direction="left" onClickPhoto={setLightbox} />
-        <div style={{
-          position: 'absolute', top: 0, left: 0, width: '120px', height: '100%',
-          background: 'linear-gradient(to right, #0d1f2d, transparent)',
-          pointerEvents: 'none', zIndex: 2,
-        }} />
-        <div style={{
-          position: 'absolute', top: 0, right: 0, width: '120px', height: '100%',
-          background: 'linear-gradient(to left, #0d1f2d, transparent)',
-          pointerEvents: 'none', zIndex: 2,
-        }} />
+        <div className="carousel-fade-left" />
+        <div className="carousel-fade-right" />
       </div>
 
       {/* Rangée 2 — droite */}
       <div style={{ position: 'relative' }}>
         <CarouselRow items={row2} direction="right" onClickPhoto={i => setLightbox((i + 5) % photos.length)} />
-        <div style={{
-          position: 'absolute', top: 0, left: 0, width: '120px', height: '100%',
-          background: 'linear-gradient(to right, #0d1f2d, transparent)',
-          pointerEvents: 'none', zIndex: 2,
-        }} />
-        <div style={{
-          position: 'absolute', top: 0, right: 0, width: '120px', height: '100%',
-          background: 'linear-gradient(to left, #0d1f2d, transparent)',
-          pointerEvents: 'none', zIndex: 2,
-        }} />
+        <div className="carousel-fade-left" />
+        <div className="carousel-fade-right" />
       </div>
 
       {/* Lightbox */}
@@ -233,6 +217,24 @@ export default function Gallery() {
       )}
 
       <style>{`
+        .carousel-fade-left {
+          position: absolute; top: 0; left: 0; height: 100%;
+          background: linear-gradient(to right, #0d1f2d, transparent);
+          pointer-events: none; z-index: 2;
+          width: 80px;
+        }
+        .carousel-fade-right {
+          position: absolute; top: 0; right: 0; height: 100%;
+          background: linear-gradient(to left, #0d1f2d, transparent);
+          pointer-events: none; z-index: 2;
+          width: 80px;
+        }
+        @media (max-width: 640px) {
+          .carousel-fade-left,
+          .carousel-fade-right {
+            width: 32px;
+          }
+        }
         @keyframes scrollLeft {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
