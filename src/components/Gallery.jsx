@@ -16,12 +16,89 @@ const photos = [
   { src: "https://senaelec.fr/img/IMG-20200203-WA0003.JPG", caption: "Mise aux normes" },
 ];
 
-// On duplique les photos pour l'effet infini
-const doubled = [...photos, ...photos];
+const row1 = [...photos.slice(0, 6), ...photos.slice(0, 6)];
+const row2 = [...photos.slice(5), ...photos.slice(5)];
+
+function CarouselRow({ items, direction = 'left', onClickPhoto }) {
+  const [paused, setPaused] = useState(false);
+  const duration = direction === 'left' ? '40s' : '50s';
+
+  return (
+    <div
+      style={{ overflow: 'hidden', position: 'relative' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div style={{
+        display: 'flex',
+        gap: '1rem',
+        width: 'max-content',
+        animation: `${direction === 'left' ? 'scrollLeft' : 'scrollRight'} ${duration} linear infinite`,
+        animationPlayState: paused ? 'paused' : 'running',
+      }}>
+        {items.map((photo, i) => (
+          <div
+            key={i}
+            onClick={() => onClickPhoto(i % (items.length / 2))}
+            style={{
+              flexShrink: 0,
+              width: '320px',
+              height: '220px',
+              borderRadius: '14px',
+              overflow: 'hidden',
+              border: '1px solid rgba(245,158,11,0.15)',
+              cursor: 'pointer',
+              position: 'relative',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.35)',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.querySelector('img').style.transform = 'scale(1.08)';
+              e.currentTarget.querySelector('.cap').style.opacity = '1';
+              e.currentTarget.style.borderColor = 'rgba(245,158,11,0.5)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(245,158,11,0.2)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.querySelector('img').style.transform = 'scale(1)';
+              e.currentTarget.querySelector('.cap').style.opacity = '0';
+              e.currentTarget.style.borderColor = 'rgba(245,158,11,0.15)';
+              e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.35)';
+            }}
+          >
+            <img
+              src={photo.src}
+              alt={photo.caption}
+              loading="lazy"
+              style={{
+                width: '100%', height: '100%',
+                objectFit: 'cover', display: 'block',
+                transition: 'transform 0.6s cubic-bezier(0.4,0,0.2,1)',
+              }}
+            />
+            <div className="cap" style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to top, rgba(13,31,45,0.92) 0%, rgba(13,31,45,0.2) 60%, transparent 100%)',
+              display: 'flex', alignItems: 'flex-end',
+              padding: '1rem',
+              opacity: 0,
+              transition: 'opacity 0.3s',
+            }}>
+              <p style={{
+                color: '#fff', fontSize: '0.85rem', fontWeight: 600,
+                fontFamily: 'var(--font-body)',
+                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+              }}>
+                {photo.caption}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Gallery() {
   const [lightbox, setLightbox] = useState(null);
-  const [paused, setPaused] = useState(false);
   const ref = useReveal();
 
   const prev = () => setLightbox(i => (i - 1 + photos.length) % photos.length);
@@ -29,87 +106,70 @@ export default function Gallery() {
 
   return (
     <section id="services-realisations" style={{
-      padding: '7rem 0',
-      background: 'var(--bg)',
+      padding: '6rem 0',
+      background: '#0d1f2d',
+      position: 'relative',
       overflow: 'hidden',
     }}>
-      <div className="container">
-        <div ref={ref} className="reveal" style={{ marginBottom: '3rem' }}>
+      {/* Glow ambiant */}
+      <div style={{
+        position: 'absolute', top: '40%', left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '600px', height: '300px',
+        background: 'radial-gradient(ellipse, rgba(245,158,11,0.07) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Header */}
+      <div className="container" style={{ marginBottom: '3rem', position: 'relative', zIndex: 1 }}>
+        <div ref={ref} className="reveal">
           <div className="section-label" style={{ marginBottom: '1rem' }}>Galerie</div>
-          <h2 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            letterSpacing: '0.03em',
-            lineHeight: 1,
-            color: 'var(--white)',
-          }}>
-            NOS SERVICES & <span style={{ color: 'var(--amber)' }}>RÉALISATIONS</span>
-          </h2>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+            <h2 style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              letterSpacing: '0.03em',
+              lineHeight: 1,
+              color: '#ffffff',
+            }}>
+              NOS SERVICES &{' '}
+              <span style={{ color: 'var(--amber)' }}>RÉALISATIONS</span>
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.85rem', fontWeight: 500 }}>
+              Survolez pour mettre en pause · Cliquez pour agrandir
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Carousel pleine largeur */}
-      <div
-        style={{ overflow: 'hidden', cursor: 'grab', userSelect: 'none' }}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
+      {/* Rangée 1 — gauche */}
+      <div style={{ position: 'relative', marginBottom: '1rem' }}>
+        <CarouselRow items={row1} direction="left" onClickPhoto={setLightbox} />
         <div style={{
-          display: 'flex',
-          gap: '1rem',
-          width: 'max-content',
-          animation: `scrollLeft 35s linear infinite`,
-          animationPlayState: paused ? 'paused' : 'running',
-        }}>
-          {doubled.map((photo, i) => (
-            <div
-              key={i}
-              onClick={() => setLightbox(i % photos.length)}
-              style={{
-                flexShrink: 0,
-                width: '280px',
-                height: '200px',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                border: '1px solid var(--border-dim)',
-                cursor: 'pointer',
-                position: 'relative',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.querySelector('img').style.transform = 'scale(1.07)';
-                e.currentTarget.querySelector('.cap').style.opacity = '1';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.querySelector('img').style.transform = 'scale(1)';
-                e.currentTarget.querySelector('.cap').style.opacity = '0';
-              }}
-            >
-              <img
-                src={photo.src}
-                alt={photo.caption}
-                loading="lazy"
-                style={{
-                  width: '100%', height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                  transition: 'transform 0.5s cubic-bezier(0.4,0,0.2,1)',
-                }}
-              />
-              <div className="cap" style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top, rgba(9,9,11,0.85) 0%, transparent 55%)',
-                display: 'flex', alignItems: 'flex-end',
-                padding: '0.75rem',
-                opacity: 0,
-                transition: 'opacity 0.3s',
-              }}>
-                <p style={{ color: '#fff', fontSize: '0.8rem', fontWeight: 500 }}>
-                  {photo.caption}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+          position: 'absolute', top: 0, left: 0, width: '120px', height: '100%',
+          background: 'linear-gradient(to right, #0d1f2d, transparent)',
+          pointerEvents: 'none', zIndex: 2,
+        }} />
+        <div style={{
+          position: 'absolute', top: 0, right: 0, width: '120px', height: '100%',
+          background: 'linear-gradient(to left, #0d1f2d, transparent)',
+          pointerEvents: 'none', zIndex: 2,
+        }} />
+      </div>
+
+      {/* Rangée 2 — droite */}
+      <div style={{ position: 'relative' }}>
+        <CarouselRow items={row2} direction="right" onClickPhoto={i => setLightbox((i + 5) % photos.length)} />
+        <div style={{
+          position: 'absolute', top: 0, left: 0, width: '120px', height: '100%',
+          background: 'linear-gradient(to right, #0d1f2d, transparent)',
+          pointerEvents: 'none', zIndex: 2,
+        }} />
+        <div style={{
+          position: 'absolute', top: 0, right: 0, width: '120px', height: '100%',
+          background: 'linear-gradient(to left, #0d1f2d, transparent)',
+          pointerEvents: 'none', zIndex: 2,
+        }} />
       </div>
 
       {/* Lightbox */}
@@ -176,6 +236,10 @@ export default function Gallery() {
         @keyframes scrollLeft {
           0%   { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        @keyframes scrollRight {
+          0%   { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
