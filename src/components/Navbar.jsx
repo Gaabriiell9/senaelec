@@ -109,30 +109,63 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Overlay */}
+      <div
+        onClick={() => setMenuOpen(false)}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 997,
+          background: 'rgba(0,0,0,0.5)',
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? 'auto' : 'none',
+          transition: 'opacity 0.3s',
+        }}
+      />
+
+      {/* Mobile drawer */}
       <div style={{
-        position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-        background: 'rgba(9,9,11,0.98)', zIndex: 999,
-        display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', gap: '2.5rem',
-        opacity: menuOpen ? 1 : 0,
-        pointerEvents: menuOpen ? 'auto' : 'none',
-        transition: 'opacity 0.3s',
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        height: '100vh',
+        width: '280px',
+        background: '#0d1f2d',
+        zIndex: 998,
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: '100px',
+        paddingLeft: '2rem',
+        paddingRight: '2rem',
+        gap: '0',
+        transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
+        boxShadow: menuOpen ? '-8px 0 32px rgba(0,0,0,0.4)' : 'none',
       }}>
         {links.map(l => (
           <a key={l.href} href={l.href} onClick={e => handleNav(e, l.href)}
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '3rem', letterSpacing: '0.08em',
-              color: active === l.href ? 'var(--amber)' : 'var(--white)',
+              fontFamily: 'var(--font-body)',
+              fontSize: '1rem',
+              fontWeight: 600,
+              letterSpacing: '0.05em',
+              color: active === l.href ? 'var(--amber)' : 'rgba(255,255,255,0.85)',
               textDecoration: 'none',
+              padding: '1rem 0',
+              borderBottom: '1px solid rgba(255,255,255,0.08)',
               transition: 'color 0.2s',
             }}>
-            {l.label.toUpperCase()}
+            {l.label}
           </a>
         ))}
         <a href="tel:0636207452" style={{
-          color: 'var(--amber)', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none',
+          marginTop: '2rem',
+          background: 'var(--amber)',
+          color: '#09090b',
+          fontWeight: 700,
+          fontSize: '0.95rem',
+          textDecoration: 'none',
+          padding: '0.9rem 1.2rem',
+          borderRadius: '8px',
+          textAlign: 'center',
         }}>
           06 36 20 74 52
         </a>

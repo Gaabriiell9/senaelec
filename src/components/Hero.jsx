@@ -1,20 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { ArrowDown, Phone, ShieldCheck } from 'lucide-react';
+import { ArrowDown, Phone } from 'lucide-react';
 
 export default function Hero() {
-  const boltRef = useRef(null);
-
-  // Subtle parallax on scroll
-  useEffect(() => {
-    const onScroll = () => {
-      if (boltRef.current) {
-        boltRef.current.style.transform = `translateY(${window.scrollY * 0.15}px)`;
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
     <section id="accueil" style={{
       position: 'relative',
@@ -36,17 +22,6 @@ export default function Hero() {
         position: 'absolute', inset: 0,
         background: 'linear-gradient(105deg, rgba(13,31,45,0.75) 45%, rgba(13,31,45,0.30) 100%)',
       }} />
-
-      {/* Decorative giant text */}
-      <div ref={boltRef} style={{
-        position: 'absolute', right: '-2rem', top: '50%',
-        transform: 'translateY(-50%)',
-        fontFamily: 'var(--font-display)',
-        fontSize: 'clamp(160px, 25vw, 320px)',
-        color: 'rgba(245,158,11,0.04)',
-        lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
-        letterSpacing: '-0.02em',
-      }}>⚡</div>
 
       {/* Amber glow blob */}
       <div style={{
@@ -100,31 +75,10 @@ export default function Hero() {
             travail soigné, résultats garantis.
           </p>
 
-          {/* Badges */}
-          <div style={{
-            display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem',
-            animation: 'fadeUp 0.8s ease 0.35s both',
-          }}>
-            {[
-              { icon: <ShieldCheck size={14} />, label: 'Certifié Qualifelec' },
-              { icon: <ShieldCheck size={14} />, label: 'Devis gratuit' },
-              { icon: <ShieldCheck size={14} />, label: 'Intervention rapide' },
-            ].map((b, i) => (
-              <div key={i} style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.4)',
-                borderRadius: '100px', padding: '0.35rem 0.9rem',
-                fontSize: '0.8rem', fontWeight: 500, color: 'var(--amber)',
-              }}>
-                {b.icon} {b.label}
-              </div>
-            ))}
-          </div>
-
           {/* CTAs */}
           <div style={{
             display: 'flex', gap: '1rem', flexWrap: 'wrap',
-            animation: 'fadeUp 0.8s ease 0.45s both',
+            animation: 'fadeUp 0.8s ease 0.35s both',
           }}>
             <a href="#contact" onClick={e => {
               e.preventDefault();
@@ -139,7 +93,7 @@ export default function Hero() {
             }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(245,158,11,0.35)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}>
-              Devis gratuit
+              Demander un devis
             </a>
             <a href="tel:0636207452" style={{
               border: '1px solid rgba(255,255,255,0.3)',
@@ -151,7 +105,7 @@ export default function Hero() {
               transition: 'border-color 0.2s, background 0.2s',
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--amber)'; e.currentTarget.style.background = 'rgba(245,158,11,0.08)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}>
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; }}>
               <Phone size={16} /> 06 36 20 74 52
             </a>
           </div>
@@ -162,7 +116,7 @@ export default function Hero() {
       <div style={{
         position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
-        color: 'var(--muted)', fontSize: '0.75rem', letterSpacing: '0.15em', zIndex: 2,
+        color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', letterSpacing: '0.15em', zIndex: 2,
         animation: 'bounce 2s ease-in-out infinite',
       }}>
         <ArrowDown size={18} />
