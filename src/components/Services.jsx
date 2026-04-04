@@ -15,7 +15,7 @@ const services = [
   {
     icon: <ShieldCheck size={28} />,
     title: 'Mise aux normes',
-    desc: 'Mise en conformité NF C 15-100, diagnostic et sécurisation de vos installations existantes.',
+    desc: 'Mise en conformité, diagnostic et sécurisation de vos installations existantes.',
   },
   {
     icon: <Lightbulb size={28} />,

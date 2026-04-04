@@ -2,7 +2,7 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const stats = [
-  { number: '10+',  label: 'Ans d\'expérience' },
+  { number: '10+', label: 'Ans d\'expérience' },
   { number: '100+', label: 'Chantiers livrés' },
 ];
 
@@ -50,14 +50,14 @@ export default function About() {
             }}>
               Sena Électricité est une entreprise artisanale bordelaise spécialisée dans les
               installations et dépannages électriques. Basée à Floirac, nous intervenons
-              sur Bordeaux, la CUB et toute la Gironde.
+              sur Bordeaux, et alentours.
             </p>
             {/* Info pills */}
             <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
                 { icon: <MapPin size={14} />, text: '6 Rue Colette, 33270 Floirac' },
-                { icon: <Phone size={14} />,  text: '06 36 20 74 52' },
-                { icon: <Mail size={14} />,   text: 'senelec33@outlook.fr' },
+                { icon: <Phone size={14} />, text: '06 36 20 74 52' },
+                { icon: <Mail size={14} />, text: 'senelec33@outlook.fr' },
               ].map((item, i) => (
                 <div key={i} style={{
                   display: 'flex', alignItems: 'center', gap: '0.75rem',
