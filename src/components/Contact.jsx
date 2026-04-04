@@ -105,7 +105,7 @@ export default function Contact() {
                       Nom *
                     </label>
                     <input name="name" value={form.name} onChange={handleChange} required
-                      placeholder="Jean Dupont"
+                      placeholder="Nom"
                       style={inputStyle}
                       onFocus={e => e.target.style.borderColor = 'var(--amber)'}
                       onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
@@ -116,7 +116,7 @@ export default function Contact() {
                       Téléphone
                     </label>
                     <input name="phone" value={form.phone} onChange={handleChange}
-                      placeholder="06 12 34 56 78" type="tel"
+                      placeholder="Téléphone" type="tel"
                       style={inputStyle}
                       onFocus={e => e.target.style.borderColor = 'var(--amber)'}
                       onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
@@ -129,7 +129,7 @@ export default function Contact() {
                     Email *
                   </label>
                   <input name="email" value={form.email} onChange={handleChange} required
-                    type="email" placeholder="jean@example.com"
+                    type="email" placeholder="Email"
                     style={inputStyle}
                     onFocus={e => e.target.style.borderColor = 'var(--amber)'}
                     onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
