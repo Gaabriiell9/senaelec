@@ -53,7 +53,11 @@ export default function Services() {
           </h2>
         </div>
 
-        <div className="services-grid">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.5rem',
+        }}>
           {services.map((s, i) => (
             <ServiceCard key={i} {...s} delay={i * 80} />
           ))}
@@ -69,16 +73,7 @@ function ServiceCard({ icon, title, desc, delay }) {
   return (
     <div ref={ref} className="reveal" style={{ transitionDelay: `${delay}ms` }}>
       <div
-        style={{
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-dim)',
-          borderRadius: 'var(--radius)',
-          padding: '2rem',
-          height: '100%',
-          display: 'flex', flexDirection: 'column', gap: '1rem',
-          cursor: 'default',
-          transition: 'border-color var(--transition), box-shadow var(--transition), transform var(--transition)',
-        }}
+        className="service-card"
         onMouseEnter={e => {
           e.currentTarget.style.borderColor = 'rgba(245,158,11,0.35)';
           e.currentTarget.style.boxShadow = 'var(--shadow-amber)';
@@ -101,15 +96,8 @@ function ServiceCard({ icon, title, desc, delay }) {
         }}>
           {icon}
         </div>
-        <h3 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '1.4rem',
-          letterSpacing: '0.04em',
-          color: 'var(--white)',
-        }}>
-          {title.toUpperCase()}
-        </h3>
-        <p style={{ color: 'var(--muted)', lineHeight: 1.7, fontSize: '0.95rem' }}>{desc}</p>
+        <h3>{title.toUpperCase()}</h3>
+        <p>{desc}</p>
       </div>
     </div>
   );
