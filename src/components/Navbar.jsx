@@ -32,7 +32,7 @@ export default function Navbar() {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
         padding: '0 2rem',
         height: scrolled ? '72px' : '88px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        display: 'flex', alignItems: 'center',
         background: scrolled ? 'rgba(13,31,45,0.97)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(245,158,11,0.12)' : 'none',
@@ -46,8 +46,12 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul style={{
-          display: 'flex', gap: '2.5rem', listStyle: 'none',
-          '@media(max-width:768px)': { display: 'none' },
+          position: 'absolute',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '2.5rem',
+          listStyle: 'none',
         }} className="nav-desktop">
           {links.map(l => (
             <li key={l.href}>

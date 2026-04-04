@@ -10,7 +10,7 @@ const services = [
   {
     icon: <Wrench size={28} />,
     title: 'Dépannage rapide',
-    desc: 'Panne, disjoncteur, court-circuit — intervention rapide et efficace sur Bordeaux et Gironde.',
+    desc: 'Panne, disjoncteur, court-circuit — intervention rapide et efficace sur Bordeaux et alentours',
   },
   {
     icon: <ShieldCheck size={28} />,

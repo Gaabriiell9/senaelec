@@ -37,7 +37,7 @@ export default function Hero() {
 
           {/* Label */}
           <div className="section-label" style={{ marginBottom: '1.5rem', animationDelay: '0s' }}>
-            Artisan Électricien — Bordeaux &amp; Gironde
+            Artisan Électricien Bordeaux &amp;
           </div>
 
           {/* Headline */}

@@ -3,8 +3,8 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const photos = [
-  { src: "https://senaelec.fr/img/back/IMG_1105.JPG",     caption: "Tableau électrique complet" },
-  { src: "https://senaelec.fr/img/back/depannage.jpg",    caption: "Dépannage électrique" },
+  { src: "https://senaelec.fr/img/back/IMG_1105.JPG", caption: "Tableau électrique complet" },
+  { src: "https://senaelec.fr/img/back/depannage.jpg", caption: "Dépannage électrique" },
   { src: "https://senaelec.fr/img/IMG-20191223-WA0000.JPG", caption: "Éclairage intérieur" },
   { src: "https://senaelec.fr/img/Add/Installation_d'un_système_d'alarme.jpg", caption: "Système d'alarme" },
   { src: "https://senaelec.fr/img/Add/Pose_de_radiateur_electrique.jpg", caption: "Radiateur électrique" },

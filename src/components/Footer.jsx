@@ -14,7 +14,7 @@ export default function Footer() {
           © {year} Sena Électricité. Tous droits réservés.
         </p>
         <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>
-          Artisan électricien — Bordeaux &amp; Gironde
+          Artisan électricien Bordeaux &amp;
         </p>
       </div>
     </footer>
