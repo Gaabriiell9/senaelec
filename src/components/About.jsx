@@ -18,11 +18,7 @@ export default function About() {
       overflow: 'hidden',
     }}>
       {/* Decorative line */}
-      <div style={{
-        position: 'absolute', top: 0, left: '50%', width: '1px',
-        height: '100%', background: 'linear-gradient(to bottom, transparent, var(--border), transparent)',
-        pointerEvents: 'none',
-      }} />
+      <div className="about-divider" />
 
       <div className="container">
         <div style={{
