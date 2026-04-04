@@ -75,20 +75,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* CTA desktop */}
-        <a href="#contact" onClick={e => handleNav(e, '#contact')}
-          className="nav-cta"
-          style={{
-            background: 'var(--amber)', color: '#09090b',
-            fontWeight: 700, fontSize: '0.85rem',
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-            padding: '0.6rem 1.4rem', borderRadius: '6px',
-            textDecoration: 'none',
-            transition: 'background 0.2s',
-          }}>
-          Devis gratuit
-        </a>
-
         {/* Burger */}
         <button
           onClick={() => setMenuOpen(v => !v)}
@@ -156,19 +142,6 @@ export default function Navbar() {
             {l.label}
           </a>
         ))}
-        <a href="tel:0636207452" style={{
-          marginTop: '2rem',
-          background: 'var(--amber)',
-          color: '#09090b',
-          fontWeight: 700,
-          fontSize: '0.95rem',
-          textDecoration: 'none',
-          padding: '0.9rem 1.2rem',
-          borderRadius: '8px',
-          textAlign: 'center',
-        }}>
-          06 36 20 74 52
-        </a>
       </div>
 
       <style>{`
