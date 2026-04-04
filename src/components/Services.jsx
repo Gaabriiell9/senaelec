@@ -53,11 +53,7 @@ export default function Services() {
           </h2>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '1.5rem',
-        }}>
+        <div className="services-grid">
           {services.map((s, i) => (
             <ServiceCard key={i} {...s} delay={i * 80} />
           ))}
