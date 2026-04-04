@@ -2,8 +2,8 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const stats = [
-  { number: '10+', label: 'Ans d\'expérience' },
-  { number: '100+', label: 'Chantiers livrés' },
+  { number: '6+', label: 'Ans d\'expérience' },
+  { number: '80+', label: 'Chantiers livrés' },
 ];
 
 export default function About() {
