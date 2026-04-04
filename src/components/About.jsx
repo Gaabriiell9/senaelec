@@ -2,10 +2,8 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const stats = [
-  { number: '10+', label: 'Ans d\'expérience' },
-  { number: '200+', label: 'Chantiers réalisés' },
-  { number: '100%', label: 'Clients satisfaits' },
-  { number: '48h', label: 'Délai d\'intervention' },
+  { number: '10+',  label: 'Ans d\'expérience' },
+  { number: '100+', label: 'Chantiers livrés' },
 ];
 
 export default function About() {
@@ -50,15 +48,10 @@ export default function About() {
               color: 'var(--muted)', lineHeight: 1.8, fontSize: '1rem',
               marginBottom: '1.5rem',
             }}>
-              Sena Électricité est une entreprise artisanale bordelaise spécialisée dans les 
-              installations et dépannages électriques. Basée à Floirac, nous intervenons 
+              Sena Électricité est une entreprise artisanale bordelaise spécialisée dans les
+              installations et dépannages électriques. Basée à Floirac, nous intervenons
               sur Bordeaux, la CUB et toute la Gironde.
             </p>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, fontSize: '1rem' }}>
-              Notre équipe qualifiée garantit des interventions rapides, fiables et 
-              conformes aux normes NF C 15-100 en vigueur — du diagnostic au chantier livré.
-            </p>
-
             {/* Info pills */}
             <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
