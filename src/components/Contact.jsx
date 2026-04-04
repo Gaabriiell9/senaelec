@@ -14,7 +14,7 @@ const services = [
 
 export default function Contact() {
   const ref = useReveal();
-  const [form, setForm]     = useState({ name: '', email: '', phone: '', service: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', message: '' });
   const [status, setStatus] = useState(null); // 'loading' | 'ok' | 'error'
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
@@ -204,8 +204,8 @@ export default function Contact() {
             }}>
               {[
                 { icon: <Phone size={20} />, label: 'Téléphone', value: '06 36 20 74 52', href: 'tel:0636207452' },
-                { icon: <Mail size={20} />,  label: 'Email',     value: 'senelec33@outlook.fr', href: 'mailto:senelec33@outlook.fr' },
-                { icon: <MapPin size={20} />, label: 'Adresse',  value: '6 Rue Colette, 33270 Floirac', href: null },
+                { icon: <Mail size={20} />, label: 'Email', value: 'senelec33@outlook.fr', href: 'mailto:senelec33@outlook.fr' },
+                { icon: <MapPin size={20} />, label: 'Adresse', value: '6 Rue Colette, 33270 Floirac', href: null },
               ].map((info, i) => (
                 <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                   <div style={{
@@ -246,8 +246,7 @@ export default function Contact() {
               </h4>
               {[
                 { days: 'Lundi – Vendredi', hours: '08h – 19h' },
-                { days: 'Samedi',           hours: '09h – 17h' },
-                { days: 'Urgences',         hours: '7j/7' },
+                { days: 'Samedi', hours: '09h – 17h' },
               ].map((h, i) => (
                 <div key={i} style={{
                   display: 'flex', justifyContent: 'space-between',
