@@ -13,7 +13,7 @@ export default function Hero() {
       {/* Background image with overlay */}
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: 'url(https://senaelec.fr/img/fondelec.JPG)',
+        backgroundImage: 'url(/fondelec.JPG)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

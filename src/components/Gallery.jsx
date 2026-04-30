@@ -3,17 +3,17 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const photos = [
-  { src: "https://senaelec.fr/img/back/IMG_1105.JPG", caption: "Tableau électrique complet" },
-  { src: "https://senaelec.fr/img/back/depannage.jpg", caption: "Dépannage électrique" },
-  { src: "https://senaelec.fr/img/IMG-20191223-WA0000.JPG", caption: "Éclairage intérieur" },
-  { src: "https://senaelec.fr/img/Add/Installation_d'un_système_d'alarme.jpg", caption: "Système d'alarme" },
-  { src: "https://senaelec.fr/img/Add/Pose_de_radiateur_electrique.jpg", caption: "Radiateur électrique" },
-  { src: "https://senaelec.fr/img/Add/Pose_radiateur_et_sèches_serviette.jpg", caption: "Sèche-serviette" },
-  { src: "https://senaelec.fr/img/Add/Projet_d'installation_electrique_pour_quatre_maison.jpg", caption: "4 maisons à Montussan" },
-  { src: "https://senaelec.fr/img/Add/Projet_rénovation_electrique.jpg", caption: "Rénovation Bordeaux" },
-  { src: "https://senaelec.fr/img/Add/Remplacement _et_mise.jpg", caption: "Mise en conformité" },
-  { src: "https://senaelec.fr/img/IMG-20200407-WA0014.JPG", caption: "Éclairage sécurisé" },
-  { src: "https://senaelec.fr/img/IMG-20200203-WA0003.JPG", caption: "Mise aux normes" },
+  { src: "/back/IMG_1105.JPG", caption: "Tableau électrique complet" },
+  { src: "/back/depannage.jpg", caption: "Dépannage électrique" },
+  { src: "/IMG-20191223-WA0000.JPG", caption: "Éclairage intérieur" },
+  { src: "/Add/Installation_d'un_système_d'alarme.jpg", caption: "Système d'alarme" },
+  { src: "/Add/Pose_de_radiateur_electrique.jpg", caption: "Radiateur électrique" },
+  { src: "/Add/Pose_radiateur_et_sèches_serviette.jpg", caption: "Sèche-serviette" },
+  { src: "/Add/Projet_d'installation_electrique_pour_quatre_maison.jpg", caption: "4 maisons à Montussan" },
+  { src: "/Add/Projet_rénovation_electrique.jpg", caption: "Rénovation Bordeaux" },
+  { src: "/Add/Remplacement _et_mise.jpg", caption: "Mise en conformité" },
+  { src: "/IMG-20200407-WA0014.JPG", caption: "Éclairage sécurisé" },
+  { src: "/IMG-20200203-WA0003.JPG", caption: "Mise aux normes" },
 ];
 
 const row1 = [...photos.slice(0, 6), ...photos.slice(0, 6)];
