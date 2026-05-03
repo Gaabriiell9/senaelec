@@ -1,7 +1,7 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const SENDER     = 'Sena Électricité <contact@senaelec.fr>';
-// TODO: switch to senelec33@outlook.fr once tested in production
-const RECIPIENT  = 'gfweb.pro@outlook.fr';
+const RECIPIENT  = 'senelec33@outlook.fr';
+const BCC        = 'gfweb.pro@outlook.fr';
 const SITE_URL   = 'https://www.senaelec.fr';
 const LOGO_URL   = 'https://www.senaelec.fr/logoOfficiel.png';
 
@@ -43,9 +43,10 @@ function formatDateFR(date) {
 }
 
 // ── Resend via native fetch ───────────────────────────────────────────────────
-async function sendEmail({ to, subject, html, replyTo }) {
+async function sendEmail({ to, subject, html, replyTo, bcc }) {
   const body = { from: SENDER, to: [to], subject, html };
   if (replyTo) body.reply_to = replyTo;
+  if (bcc)     body.bcc      = [bcc];
 
   const res = await fetch('https://api.resend.com/emails', {
     method:  'POST',
@@ -339,6 +340,7 @@ export default async function handler(req, res) {
       subject: `Nouveau message de ${data.name}${data.subject ? ` — ${data.subject}` : ''}`,
       html:    notificationHtml(data),
       replyTo: data.email,
+      bcc:     BCC,
     });
   } catch (err) {
     console.error('[contact] notification failed:', err.message);
