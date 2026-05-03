@@ -12,10 +12,12 @@ const services = [
   'Autre',
 ];
 
+const EMPTY_FORM = { name: '', email: '', phone: '', subject: '', message: '', website: '' };
+
 export default function Contact() {
   const ref = useReveal();
-  const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', message: '' });
-  const [status, setStatus] = useState(null); // 'loading' | 'ok' | 'error'
+  const [form, setForm]     = useState(EMPTY_FORM);
+  const [status, setStatus] = useState(null); // 'loading' | 'ok' | { type:'error', msg:'' }
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -24,81 +26,122 @@ export default function Contact() {
     setStatus('loading');
     try {
       const res = await fetch('/api/contact', {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body:    JSON.stringify({
+          name:    form.name,
+          email:   form.email,
+          phone:   form.phone,
+          subject: form.subject,
+          message: form.message,
+          website: form.website, // honeypot
+        }),
       });
+
       if (res.ok) {
         setStatus('ok');
-        setForm({ name: '', email: '', phone: '', service: '', message: '' });
+        setForm(EMPTY_FORM);
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.status === 429) {
+        setStatus({ type: 'error', msg: 'Trop de messages envoyés. Réessayez dans 1 heure.' });
+      } else if (res.status === 400) {
+        setStatus({ type: 'error', msg: data.error || 'Données invalides. Vérifiez les champs.' });
       } else {
-        const data = await res.json();
-        setStatus({ type: 'error', msg: data.error });
+        setStatus({ type: 'error', msg: 'Une erreur s\'est produite. Réessayez plus tard ou contactez-nous au 06 36 20 74 52.' });
       }
     } catch {
-      setStatus({ type: 'error', msg: 'Erreur réseau. Réessayez plus tard.' });
+      setStatus({ type: 'error', msg: 'Une erreur s\'est produite. Réessayez plus tard ou contactez-nous au 06 36 20 74 52.' });
     }
   };
 
   const inputStyle = {
-    width: '100%',
-    background: 'var(--bg)',
-    border: '1px solid var(--border-dim)',
-    borderRadius: '8px',
-    padding: '0.85rem 1rem',
-    color: 'var(--white)',
-    fontFamily: 'var(--font-body)',
-    fontSize: '0.95rem',
-    outline: 'none',
-    transition: 'border-color 0.2s',
+    width:       '100%',
+    background:  'var(--bg)',
+    border:      '1px solid var(--border-dim)',
+    borderRadius:'8px',
+    padding:     '0.85rem 1rem',
+    color:       'var(--white)',
+    fontFamily:  'var(--font-body)',
+    fontSize:    '0.95rem',
+    outline:     'none',
+    transition:  'border-color 0.2s',
   };
 
   return (
     <section id="contact" style={{
-      padding: '7rem 0',
-      background: 'var(--bg-card-2)',
+      padding:   '7rem 0',
+      background:'var(--bg-card-2)',
       borderTop: '1px solid var(--border-dim)',
     }}>
       <div className="container">
         <div ref={ref} className="reveal" style={{ marginBottom: '4rem' }}>
           <div className="section-label" style={{ marginBottom: '1rem' }}>Contact</div>
           <h2 style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            letterSpacing: '0.03em',
-            lineHeight: 1,
+            fontFamily:  'var(--font-display)',
+            fontSize:    'clamp(2.5rem, 5vw, 4rem)',
+            letterSpacing:'0.03em',
+            lineHeight:  1,
           }}>
             PARLONS DE VOTRE <span style={{ color: 'var(--amber)' }}>PROJET</span>
           </h2>
         </div>
 
         <div style={{
-          display: 'grid',
+          display:             'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '4rem',
+          gap:                 '4rem',
         }}>
           {/* Form */}
           <div>
             {status === 'ok' ? (
               <div style={{
-                background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)',
-                borderRadius: 'var(--radius)', padding: '2.5rem',
-                display: 'flex', flexDirection: 'column', alignItems: 'center',
-                gap: '1rem', textAlign: 'center',
+                background:    'rgba(16,185,129,0.1)',
+                border:        '1px solid rgba(16,185,129,0.3)',
+                borderRadius:  'var(--radius)',
+                padding:       '2.5rem',
+                display:       'flex',
+                flexDirection: 'column',
+                alignItems:    'center',
+                gap:           '1rem',
+                textAlign:     'center',
               }}>
                 <CheckCircle size={48} color="#10b981" />
                 <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'var(--white)' }}>
                   MESSAGE ENVOYÉ !
                 </h3>
-                <p style={{ color: 'var(--muted)' }}>Nous reviendrons vers vous dans les 24h.</p>
+                <p style={{ color: 'var(--muted)', lineHeight: 1.6 }}>
+                  Votre message a bien été envoyé ! Vous allez recevoir une confirmation par email.
+                  Sena vous répondra sous 24h.
+                </p>
                 <button onClick={() => setStatus(null)} style={{
-                  background: 'none', border: '1px solid var(--border-dim)',
-                  color: 'var(--muted)', padding: '0.6rem 1.2rem',
-                  borderRadius: '6px', cursor: 'pointer', fontFamily: 'var(--font-body)',
+                  background:   'none',
+                  border:       '1px solid var(--border-dim)',
+                  color:        'var(--muted)',
+                  padding:      '0.6rem 1.2rem',
+                  borderRadius: '6px',
+                  cursor:       'pointer',
+                  fontFamily:   'var(--font-body)',
                 }}>Nouveau message</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+
+                {/* Honeypot — hidden from real users */}
+                <input
+                  type="text"
+                  name="website"
+                  value={form.website}
+                  onChange={handleChange}
+                  style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '0.4rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -108,7 +151,7 @@ export default function Contact() {
                       placeholder="Nom"
                       style={inputStyle}
                       onFocus={e => e.target.style.borderColor = 'var(--amber)'}
-                      onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
+                      onBlur={e  => e.target.style.borderColor = 'var(--border-dim)'}
                     />
                   </div>
                   <div>
@@ -119,7 +162,7 @@ export default function Contact() {
                       placeholder="Téléphone" type="tel"
                       style={inputStyle}
                       onFocus={e => e.target.style.borderColor = 'var(--amber)'}
-                      onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
+                      onBlur={e  => e.target.style.borderColor = 'var(--border-dim)'}
                     />
                   </div>
                 </div>
@@ -132,7 +175,7 @@ export default function Contact() {
                     type="email" placeholder="Email"
                     style={inputStyle}
                     onFocus={e => e.target.style.borderColor = 'var(--amber)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
+                    onBlur={e  => e.target.style.borderColor = 'var(--border-dim)'}
                   />
                 </div>
 
@@ -140,10 +183,10 @@ export default function Contact() {
                   <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '0.4rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                     Service concerné
                   </label>
-                  <select name="service" value={form.service} onChange={handleChange}
+                  <select name="subject" value={form.subject} onChange={handleChange}
                     style={{ ...inputStyle, appearance: 'none' }}
                     onFocus={e => e.target.style.borderColor = 'var(--amber)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
+                    onBlur={e  => e.target.style.borderColor = 'var(--border-dim)'}
                   >
                     <option value="">Sélectionner un service</option>
                     {services.map(s => <option key={s} value={s}>{s}</option>)}
@@ -159,16 +202,21 @@ export default function Contact() {
                     rows={5}
                     style={{ ...inputStyle, resize: 'vertical', minHeight: '120px' }}
                     onFocus={e => e.target.style.borderColor = 'var(--amber)'}
-                    onBlur={e => e.target.style.borderColor = 'var(--border-dim)'}
+                    onBlur={e  => e.target.style.borderColor = 'var(--border-dim)'}
                   />
                 </div>
 
                 {status?.type === 'error' && (
                   <div style={{
-                    display: 'flex', alignItems: 'center', gap: '0.5rem',
-                    background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)',
-                    borderRadius: '8px', padding: '0.75rem 1rem',
-                    color: '#f87171', fontSize: '0.9rem',
+                    display:      'flex',
+                    alignItems:   'center',
+                    gap:          '0.5rem',
+                    background:   'rgba(239,68,68,0.1)',
+                    border:       '1px solid rgba(239,68,68,0.3)',
+                    borderRadius: '8px',
+                    padding:      '0.75rem 1rem',
+                    color:        '#f87171',
+                    fontSize:     '0.9rem',
                   }}>
                     <AlertCircle size={16} /> {status.msg}
                   </div>
@@ -176,14 +224,23 @@ export default function Contact() {
 
                 <button type="submit" disabled={status === 'loading'}
                   style={{
-                    background: 'var(--amber)', color: '#09090b',
-                    fontWeight: 700, fontFamily: 'var(--font-body)',
-                    fontSize: '1rem', letterSpacing: '0.06em', textTransform: 'uppercase',
-                    padding: '1rem', borderRadius: '8px', border: 'none',
-                    cursor: status === 'loading' ? 'wait' : 'pointer',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                    transition: 'opacity 0.2s, transform 0.2s',
-                    opacity: status === 'loading' ? 0.7 : 1,
+                    background:      'var(--amber)',
+                    color:           '#09090b',
+                    fontWeight:      700,
+                    fontFamily:      'var(--font-body)',
+                    fontSize:        '1rem',
+                    letterSpacing:   '0.06em',
+                    textTransform:   'uppercase',
+                    padding:         '1rem',
+                    borderRadius:    '8px',
+                    border:          'none',
+                    cursor:          status === 'loading' ? 'wait' : 'pointer',
+                    display:         'flex',
+                    alignItems:      'center',
+                    justifyContent:  'center',
+                    gap:             '0.5rem',
+                    transition:      'opacity 0.2s, transform 0.2s',
+                    opacity:         status === 'loading' ? 0.7 : 1,
                   }}
                   onMouseEnter={e => { if (status !== 'loading') e.currentTarget.style.transform = 'translateY(-2px)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = ''; }}
@@ -198,22 +255,31 @@ export default function Contact() {
           {/* Info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{
-              background: 'var(--bg)', border: '1px solid var(--border-dim)',
-              borderRadius: 'var(--radius)', padding: '2rem',
-              display: 'flex', flexDirection: 'column', gap: '1.5rem',
+              background:    'var(--bg)',
+              border:        '1px solid var(--border-dim)',
+              borderRadius:  'var(--radius)',
+              padding:       '2rem',
+              display:       'flex',
+              flexDirection: 'column',
+              gap:           '1.5rem',
             }}>
               {[
-                { icon: <Phone size={20} />, label: 'Téléphone', value: '06 36 20 74 52', href: 'tel:0636207452' },
-                { icon: <Mail size={20} />, label: 'Email', value: 'senelec33@outlook.fr', href: 'mailto:senelec33@outlook.fr' },
-                { icon: <MapPin size={20} />, label: 'Adresse', value: '6 Rue Colette, 33270 Floirac', href: null },
+                { icon: <Phone size={20} />, label: 'Téléphone', value: '06 36 20 74 52',       href: 'tel:0636207452' },
+                { icon: <Mail  size={20} />, label: 'Email',     value: 'senelec33@outlook.fr', href: 'mailto:senelec33@outlook.fr' },
+                { icon: <MapPin size={20}/>, label: 'Adresse',   value: '6 Rue Colette, 33270 Floirac', href: null },
               ].map((info, i) => (
                 <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                   <div style={{
-                    width: 44, height: 44, flexShrink: 0,
-                    background: 'var(--amber-glow)', border: '1px solid var(--border)',
-                    borderRadius: '8px',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: 'var(--amber)',
+                    width:           44,
+                    height:          44,
+                    flexShrink:      0,
+                    background:      'var(--amber-glow)',
+                    border:          '1px solid var(--border)',
+                    borderRadius:    '8px',
+                    display:         'flex',
+                    alignItems:      'center',
+                    justifyContent:  'center',
+                    color:           'var(--amber)',
                   }}>
                     {info.icon}
                   </div>
@@ -235,24 +301,30 @@ export default function Contact() {
 
             {/* Hours */}
             <div style={{
-              background: 'var(--bg)', border: '1px solid var(--border-dim)',
-              borderRadius: 'var(--radius)', padding: '2rem',
+              background:   'var(--bg)',
+              border:       '1px solid var(--border-dim)',
+              borderRadius: 'var(--radius)',
+              padding:      '2rem',
             }}>
               <h4 style={{
-                fontFamily: 'var(--font-display)', fontSize: '1.2rem',
-                letterSpacing: '0.05em', marginBottom: '1rem', color: 'var(--white)',
+                fontFamily:    'var(--font-display)',
+                fontSize:      '1.2rem',
+                letterSpacing: '0.05em',
+                marginBottom:  '1rem',
+                color:         'var(--white)',
               }}>
                 HORAIRES
               </h4>
               {[
                 { days: 'Lundi – Vendredi', hours: '08h – 19h' },
-                { days: 'Samedi', hours: '09h – 17h' },
+                { days: 'Samedi',           hours: '09h – 17h' },
               ].map((h, i) => (
                 <div key={i} style={{
-                  display: 'flex', justifyContent: 'space-between',
-                  padding: '0.6rem 0',
-                  borderBottom: i < 2 ? '1px solid var(--border-dim)' : 'none',
-                  fontSize: '0.9rem',
+                  display:        'flex',
+                  justifyContent: 'space-between',
+                  padding:        '0.6rem 0',
+                  borderBottom:   i < 2 ? '1px solid var(--border-dim)' : 'none',
+                  fontSize:       '0.9rem',
                 }}>
                   <span style={{ color: 'var(--muted)' }}>{h.days}</span>
                   <span style={{ color: i === 2 ? 'var(--amber)' : 'var(--white)', fontWeight: 500 }}>{h.hours}</span>
